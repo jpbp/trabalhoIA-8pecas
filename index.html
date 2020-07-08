@@ -124,20 +124,48 @@
 </html>
 
 <script>
-  let estado = {
-    node: 1,
-    parent: "",
-    _11: "2",
-    _12: "3",
-    _13: "5",
-    _21: "6",
-    _22: "7",
-    _23: "1",
-    _31: "8",
-    _32: "4",
-    _33: "*",
-  };
+  function criarEstadoInicial(){
+    let estado = {
+      node: 1,
+      parent: "",
+      _00: "2",
+      _01: "3",
+      _02: "5",
+      _10: "6",
+      _11: "7",
+      _12: "1",
+      _20: "8",
+      _21: "4",
+      _22: "*"
+    }
+    return estado
+  }
+  function criarfila(estadoInicial){
+    let nodes = [];
+    nodes.push(estadoInicial)
+    return nodes;
+  }
+  function estadoObjetivo(no){
+     if(no._00==="1" && no._01==="2" && no._02==="3" && no._10==="8" && no._11==="" && no._12==="4" && no._20==="7" && no._21==="6" && no._22==="5"){
+       return true
+     }else{
+       return false
+     }
+  }
+  console.log(estadoObjetivo(criarEstadoInicial()))
+  function buscaAmplitude(){
+    let estadoInicial=criarEstadoInicial()
+    let nodes=criarfila(estadoInicial)
+    let no;
+    while(nodes.length > 0){
+      no=nodes.shift();
+      if(estadoObjetivo(no)){
+        return no 
+      }
+    }
+  }
 
-  let nodes = [];
-  nodes.push(estadoNovo);
+
+  
+  
 </script>
