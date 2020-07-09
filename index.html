@@ -11,7 +11,7 @@
     <!-- Copyright 1998-2020 by Northwoods Software Corporation. -->
 
     <script src="go.js"></script>
-    <script type="text/javascript" src="buscaAmplitude.js"></script>
+
     <script id="code">
       function init() {
         if (window.goSamples) goSamples(); // init for these samples -- you don't need to call this
@@ -123,73 +123,20 @@
 
       <div class="container">
         <div class="modal">
-          <div class="node"><span id="_00">1</span></div>
-          <div class="node"><span id="_01">2</span></div>
-          <div class="node"><span id="_02">3</span></div>
-          <div class="node"><span id="_10">4</span></div>
-          <div class="node"><span id="_11">5</span></div>
-          <div class="node"><span id="_12">6</span></div>
-          <div class="node"><span id="_20">6</span></div>
-          <div class="node"><span id="_21">8</span></div>
-          <div class="node"><span id="_22">9</span></div>
+          <div class="node"><span id="um"></span></div>
+          <div class="node"><span id="dois"></span></div>
+          <div class="node"><span id="tres"></span></div>
+          <div class="node"><span id="quatro"></span></div>
+          <div class="node"><span id="cinco"></span></div>
+          <div class="node"><span id="seis"></span></div>
+          <div class="node"><span id="sete"></span></div>
+          <div class="node"><span id="oito"></span></div>
+          <div class="node"><span id="nove"></span></div>
         </div>
       </div>
     </div>
   </body>
 </html>
-
-<script>
-  function criarEstadoInicial() {
-    let estado = {
-      node: 1,
-      parent: "",
-      _00: "2",
-      _01: "3",
-      _02: "5",
-      _10: "6",
-      _11: "7",
-      _12: "1",
-      _20: "8",
-      _21: "4",
-      _22: "*",
-    };
-    return estado;
-  }
-  function criarfila(estadoInicial) {
-    let nodes = [];
-    nodes.push(estadoInicial);
-    return nodes;
-  }
-  function estadoObjetivo(no) {
-    if (
-      no._00 === "1" &&
-      no._01 === "2" &&
-      no._02 === "3" &&
-      no._10 === "8" &&
-      no._11 === "" &&
-      no._12 === "4" &&
-      no._20 === "7" &&
-      no._21 === "6" &&
-      no._22 === "5"
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  console.log(estadoObjetivo(criarEstadoInicial()));
-  function buscaAmplitude() {
-    let estadoInicial = criarEstadoInicial();
-    let nodes = criarfila(estadoInicial);
-    let no;
-    while (nodes.length > 0) {
-      no = nodes.shift();
-      if (estadoObjetivo(no)) {
-        return no;
-      }
-    }
-  }
-</script>
 
 <style>
   .modal {
@@ -222,3 +169,5 @@
     font-size: 28px;
   }
 </style>
+
+<script type="text/javascript" src="buscaAmplitude.js"></script>
