@@ -1,8 +1,10 @@
+let somadorNode=1;
+let teste=1
 function criarEstadoInicial(){
     let estado = {
       node: 1,
       parent: "",
-      vetor:["2","3","5","6","7","1","8","4","*"]  
+      vetor:["1","2","3","8","5","*","7","6","4"]  
     }  
     return estado
   }
@@ -26,7 +28,10 @@ function criarEstadoInicial(){
     return nodes;
   }
   function criarNovoEstado(no,posicaoEmBranco,posicaoMudanca){
+    somadorNode+=1  
     let newNo = JSON.parse(JSON.stringify(no))
+    newNo.node=JSON.parse(JSON.stringify(somadorNode))
+    newNo.parent=no.node
     alteraPosicao(no,newNo,posicaoEmBranco,posicaoMudanca)
     return newNo
   }
@@ -39,42 +44,175 @@ function criarEstadoInicial(){
      }
   }
 
-  
-  function expandir(nodes,no,repitido){
+  function verificaIgualdade(no,newNode){
+    for (let k = 0; k < no.vetor.length; k++){
+        if(no.vetor[k]!==newNode.vetor[k]){
+           return false
+        }
+    } 
+    return true
+  }
+  function verificaSejaFoiVisitado(no,visitado){
+      for (let k = 0; k < visitado.length; k++){
+        if(verificaIgualdade(no,visitado[k])){
+            return false 
+        }
+    } 
+    return true
+  }
+
+  function expandir(nodes,no,visitado){
     let posicao=0;
-    for (i = 0; i < no.vetor.length; i++){
+    for (let i = 0; i < no.vetor.length; i++){
         if(no.vetor[i]==="*"){
           posicao=i
         }
     } 
+
     if(posicao==8){
-      nodes.push(criarNovoEstado(no,posicao,5))
-      nodes.push(criarNovoEstado(no,posicao,7))
+      let node1= criarNovoEstado(no,posicao,5) 
+      let node2=criarNovoEstado(no,posicao,7)
+
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){  
+            nodes.push(node2)
+      }
     }
-    else if(posicao==5){
-      nodes.push(criarNovoEstado(no,posicao,2))
-      nodes.push(criarNovoEstado(no,posicao,4))
-      nodes.push(criarNovoEstado(no,posicao,8))
+
+    if(posicao==7){
+      let node1= criarNovoEstado(no,posicao,4)
+      let node2= criarNovoEstado(no,posicao,6)
+      let node3= criarNovoEstado(no,posicao,8)
+
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+      if(verificaSejaFoiVisitado(node3,visitado)){
+        nodes.push(node3)
+      }
+    }
+      
+     if(posicao==6){
+      let node1= criarNovoEstado(no,posicao,3)
+      let node2= criarNovoEstado(no,posicao,7)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+    }
+
+    if(posicao==5){
+      let node1=criarNovoEstado(no,posicao,2)
+      let node2=criarNovoEstado(no,posicao,4)
+      let node3=criarNovoEstado(no,posicao,8)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+      if(verificaSejaFoiVisitado(node3,visitado)){
+        nodes.push(node3)
+      }
     }
     
-    console.log("aqui",nodes.length)
+     if(posicao==4){
+      let node1=criarNovoEstado(no,posicao,1)
+      let node2=criarNovoEstado(no,posicao,3)
+      let node3=criarNovoEstado(no,posicao,5)
+      let node4=criarNovoEstado(no,posicao,7)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+      if(verificaSejaFoiVisitado(node3,visitado)){
+        nodes.push(node3)
+      }
+      if(verificaSejaFoiVisitado(node4,visitado)){
+        nodes.push(node4)
+      }
+    }
 
+    if(posicao==3){
+      let node1=criarNovoEstado(no,posicao,0)
+      let node2=criarNovoEstado(no,posicao,4)
+      let node3=criarNovoEstado(no,posicao,6)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+      if(verificaSejaFoiVisitado(node3,visitado)){
+        nodes.push(node3)
+      }
+    }
+
+    if(posicao==2){
+      let node1= criarNovoEstado(no,posicao,1)
+      let node2= criarNovoEstado(no,posicao,5)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+    }
+
+     if(posicao==1){
+      let node1=criarNovoEstado(no,posicao,0)
+      let node2=criarNovoEstado(no,posicao,2)
+      let node3=criarNovoEstado(no,posicao,4)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+      if(verificaSejaFoiVisitado(node3,visitado)){
+        nodes.push(node3)
+      }
+    }
+
+     if(posicao==0){
+      let node1=criarNovoEstado(no,posicao,1)
+      let node2=criarNovoEstado(no,posicao,3)
+      if(verificaSejaFoiVisitado(node1,visitado)){
+        nodes.push(node1)
+      }
+      if(verificaSejaFoiVisitado(node2,visitado)){
+        nodes.push(node2)
+      }
+    }
+    
+
+    teste+=1
     return nodes
   }
   function buscaAmplitude(){
     let estadoInicial=criarEstadoInicial()
     let nodes=criarfila(estadoInicial)
     let no;
+    let visitado=[]
+   
     while(nodes.length > 0){
-      no=nodes.shift();
+      no=nodes.shift(); 
+      visitado.push(no)
+      print(no)
+      console.log(no.node)
       if(estadoObjetivo(no)){
         return no 
       }
-      expandir(nodes,no)
-      
+      nodes=expandir(nodes,no,visitado)
     }
-    
-    
   }
-aux=criarEstadoInicial()
-print(aux)
+console.log(buscaAmplitude())
