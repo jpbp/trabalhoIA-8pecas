@@ -9,7 +9,7 @@ function criarEstadoInicial(){
   function print(no){
       let printnode=""
       for (let i = 0; i < no.vetor.length; i++){
-        if(i==3 || i==6 || i==9){
+        if(i%3==0){
           printnode+='\n'
         }
         printnode+=no.vetor[i]+" "
@@ -76,4 +76,5 @@ function criarEstadoInicial(){
     
     
   }
-console.log("foi")
+aux=criarEstadoInicial()
+print(aux)
