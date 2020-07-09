@@ -63,21 +63,38 @@
 
         myDiagram.linkTemplate = $(go.Link, $(go.Shape, { strokeWidth: 1.5 }));
 
+        let nodeDataArray = [];
+        let result = buscaAmplitude();
+        console.log(result);
+
+        result[1].forEach((element) => {
+          nodeDataArray.push({
+            key: Number(element.node),
+            text: element.node,
+            fill: "#f68c06",
+            stroke: "#4d90fe",
+            parent: Number(element.parent),
+          });
+          if (element.node == result[0].node) {
+            nodeDataArray[nodeDataArray.length - 1].fill = "#7FFF00";
+          }
+        });
+
         // set up the nodeDataArray, describing each part of the sentence
-        var nodeDataArray = [
-          { key: 1, text: "1", fill: "#f68c06", stroke: "#4d90fe" },
-          { key: 3, text: "3", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
-          { key: 4, text: "4", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
-          { key: 2, text: "2", fill: "#f68c06", stroke: "#4d90fe", parent: 1 },
-          { key: 6, text: "6", fill: "#f68c06", stroke: "#4d90fe", parent: 3 },
-          { key: 5, text: "5", fill: "#f68c06", stroke: "#4d90fe", parent: 2 },
-          { key: 7, text: "7", fill: "#f68c06", stroke: "#4d90fe", parent: 3 },
-          { key: 8, text: "8", fill: "#f68c06", stroke: "#4d90fe", parent: 3 },
-        ];
 
         myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
           var part = e.subject.part;
           console.log(part.data.key);
+          let nodes = result[1][part.data.key - 1];
+          document.querySelector("#um").innerHTML = nodes.vetor[0];
+          document.querySelector("#dois").innerHTML = nodes.vetor[1];
+          document.querySelector("#tres").innerHTML = nodes.vetor[2];
+          document.querySelector("#quatro").innerHTML = nodes.vetor[3];
+          document.querySelector("#cinco").innerHTML = nodes.vetor[4];
+          document.querySelector("#seis").innerHTML = nodes.vetor[5];
+          document.querySelector("#sete").innerHTML = nodes.vetor[6];
+          document.querySelector("#oito").innerHTML = nodes.vetor[7];
+          document.querySelector("#nove").innerHTML = nodes.vetor[8];
         });
         // create the Model with data for the tree, and assign to the Diagram
         myDiagram.model = $(go.TreeModel, { nodeDataArray: nodeDataArray });
