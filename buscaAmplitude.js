@@ -4,7 +4,7 @@ function criarEstadoInicial() {
   let estado = {
     node: 1,
     parent: "",
-    vetor: ["1", "2", "3", "7", "8", "4", "*", "6", "5"],
+    vetor: ["1", "2", "3", "7", "8", "4", "6", "*", "5"],
   };
   return estado;
 }
