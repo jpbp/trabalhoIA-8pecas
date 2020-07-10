@@ -13,7 +13,7 @@
     <script src="go.js"></script>
 
     <script id="code">
-      function init() {
+      function init(modo) {
         if (window.goSamples) goSamples(); // init for these samples -- you don't need to call this
         var $ = go.GraphObject.make; // for conciseness in defining templates
         myDiagram = $(go.Diagram, "myDiagramDiv", {
@@ -64,8 +64,12 @@
         myDiagram.linkTemplate = $(go.Link, $(go.Shape, { strokeWidth: 1.5 }));
 
         let nodeDataArray = [];
-        let result = buscaAmplitude();
-        console.log(result);
+        let result;
+        if (modo == "amplitude") {
+          result = buscaAmplitude();
+        } else {
+          result = buscaHeuristica();
+        }
 
         result[1].forEach((element) => {
           nodeDataArray.push({
@@ -131,11 +135,11 @@
       // end FlatTreeLayout
     </script>
   </head>
-  <body onload="init()">
+  <body>
     <div id="sample" style="width: 100%; display: flex;">
       <div
         id="myDiagramDiv"
-        style="border: solid 1px black; width: 80%; height: 500px;"
+        style="border: solid 1px black; width: 80%; height: 600px;"
       ></div>
 
       <div class="container">
@@ -152,6 +156,24 @@
         </div>
       </div>
     </div>
+    <div>
+      <span style="font-size: 24px; font-weight: bold;"
+        >Clique nos nós para ver o estado</span
+      >
+    </div>
+
+    <div style="margin-top: 20px;">
+      <span style="font-size: 16px;">Escolha o método de busca</span>
+    </div>
+    <div style="margin-top: 20px;">
+      <button onclick="amiplitude()">Método cego(Amplitude)</button>
+    </div>
+    <div style="margin-top: 10px;">
+      <button onclick="heuristica()">Heurística</button>
+    </div>
+    <div style="margin-top: 10px;">
+      <button onclick="limpar()">Limpar</button>
+    </div>
   </body>
 </html>
 
@@ -164,12 +186,10 @@
     display: flex;
     flex-wrap: wrap;
     background: rgba(125, 200, 200, 0.7);
+    margin-left: 10px;
   }
   .container {
-    margin-top: 50px;
-    width: 100vw;
-    display: flex;
-    align-items: ;
+    width: 50vw;
     justify-content: center;
   }
 
@@ -187,4 +207,16 @@
   }
 </style>
 
+<script>
+  function amiplitude() {
+    init("amplitude");
+  }
+  function heuristica() {
+    init("heuristica");
+  }
+  function limpar() {
+    location.reload();
+  }
+</script>
 <script type="text/javascript" src="buscaAmplitude.js"></script>
+<script type="text/javascript" src="buscaHeuristica.js"></script>
