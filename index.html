@@ -75,14 +75,21 @@
           nodeDataArray.push({
             key: Number(element.node),
             text: element.node,
-            fill: "#f68c06",
+            fill: "#f68c00",
             stroke: "#4d90fe",
             parent: Number(element.parent),
           });
+         
+          if(Number(element.minmax)==1){
+            nodeDataArray[nodeDataArray.length - 1].fill = "#ff0000";
+          }
+
           if (element.node == result[0].node) {
             nodeDataArray[nodeDataArray.length - 1].fill = "#7FFF00";
           }
         });
+
+        
 
         // set up the nodeDataArray, describing each part of the sentence
 

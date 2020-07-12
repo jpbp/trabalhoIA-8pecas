@@ -3,7 +3,8 @@ let teste = 1;
 function criarEstadoInicial() {
   let estado = {
     node: 1,
-    parent: "",
+    minmax:0,
+    parent: "-",
     vetor: ["1", "2", "3", "7", "8", "4", "6", "*", "5"],
   };
   return estado;
@@ -18,6 +19,9 @@ function print(no) {
   }
   console.log(printnode);
 }
+
+
+
 function alteraPosicao(no, newNode, posicaoEmBranco, posicaoMudanca) {
   newNode.vetor[posicaoEmBranco] = no.vetor[posicaoMudanca];
   newNode.vetor[posicaoMudanca] = no.vetor[posicaoEmBranco];
@@ -31,6 +35,7 @@ function criarNovoEstado(no, posicaoEmBranco, posicaoMudanca) {
   let newNo = JSON.parse(JSON.stringify(no));
   newNo.parent = no.node;
   alteraPosicao(no, newNo, posicaoEmBranco, posicaoMudanca);
+  newNo.minmax=FunMinimax(newNo)
   return newNo;
 }
 
@@ -70,6 +75,7 @@ function verificaSejaFoiVisitado(no, visitado) {
 }
 
 function expandir(nodes, no, visitado) {
+  somaFilho=0
   let posicao = 0;
   for (let i = 0; i < no.vetor.length; i++) {
     if (no.vetor[i] === "*") {
@@ -262,7 +268,7 @@ function buscaAmplitude() {
   while (nodes.length > 0) {
     no = nodes.shift();
     visitado.push(no);
-    console.log(no);
+    console.log(no)
     if (estadoObjetivo(no)) {
       return [no, visitado];
     }
