@@ -67,9 +67,14 @@
         let result;
         if (modo == "amplitude") {
           result = buscaAmplitude();
-        } else {
+        } 
+        if(modo =="heuristica") {
           result = buscaHeuristica();
         }
+        if(modo =="minimax") {
+          result = buscaMinimax();
+        }
+        
 
         result[1].forEach((element) => {
           nodeDataArray.push({
@@ -179,6 +184,9 @@
       <button onclick="heuristica()">Heurística</button>
     </div>
     <div style="margin-top: 10px;">
+      <button onclick="minimax()">minimax</button>
+    </div>
+    <div style="margin-top: 10px;">
       <button onclick="limpar()">Limpar</button>
     </div>
   </body>
@@ -221,9 +229,13 @@
   function heuristica() {
     init("heuristica");
   }
+  function minimax(){
+    init("minimax")
+  }
   function limpar() {
     location.reload();
   }
 </script>
 <script type="text/javascript" src="buscaAmplitude.js"></script>
 <script type="text/javascript" src="buscaHeuristica.js"></script>
+<script type="text/javascript" src="minimax.js"></script>

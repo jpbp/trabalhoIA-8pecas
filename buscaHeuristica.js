@@ -1,17 +1,17 @@
 let somadorNodeH = 1;
-function criarEstadoInicial() {
+function criarEstadoInicialBH() {
   let estado = {
     node: 1,
     parent: "",
     minmax:"",
     //professor
-    //vetor:["2","*","3","1","7","4","6","8","5"]  
+    vetor:["2","*","3","1","7","4","6","8","5"]  
     // 17ba 4bh
     //vetor:["1","2","3","7","8","4","6","*","5"] 
     //31ba 5bh
     //vetor:["1","2","3","7","8","4","6","5","*"]
     //50000
-    vetor:["7","*","1","6","3","4","2","8","5"] 
+    //vetor:["7","*","1","6","3","4","2","8","5"] 
 
     //vetor:["1","2","3","7","8","*","6","5","4"]
   };
@@ -521,7 +521,7 @@ function expandirH(nodes, no, visitado) {
   return nodes;
 }
 function buscaHeuristica() {
-  let estadoInicial = criarEstadoInicial();
+  let estadoInicial = criarEstadoInicialBH();
   let nodes = criarfila(estadoInicial);
   let no;
   let visitado = [];

@@ -12,3 +12,21 @@ para a sua apresentação via Google Meet.</p>
 qualquer estado inicial que contenha algarismos de 1 a 8 e mais um quadrado vazio chegue
 ao seguinte estado final (Figura 1). Os operadores podem ser representados como mover o
 espaço em branco para cima, para a esquerda, para a direita ou para baixo.</p>
+
+function buscaMinimax(visitado) {
+  let result = buscaAmplitude();
+  let visi=result[1]
+  let newVetor=[];
+  newVetor.push(result[0])
+  let auxno=JSON.parse(JSON.stringify(result[0]));
+  let i=visi.length-2;
+  while(i>0){ 
+    if(auxno.parent==visi[i].node){
+      newVetor.push(visi[i])
+      auxno=JSON.parse(JSON.stringify(visi[i]));
+    }
+    i--
+  } 
+  newVetor.push(visi[0])
+  return [visi[0],newVetor.reverse()]
+}
