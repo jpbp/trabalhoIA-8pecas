@@ -67,14 +67,13 @@
         let result;
         if (modo == "amplitude") {
           result = buscaAmplitude();
-        } 
-        if(modo =="heuristica") {
+        }
+        if (modo == "heuristica") {
           result = buscaHeuristica();
         }
-        if(modo =="minimax") {
+        if (modo == "minimax") {
           result = buscaMinimax();
         }
-        
 
         result[1].forEach((element) => {
           nodeDataArray.push({
@@ -84,8 +83,8 @@
             stroke: "#4d90fe",
             parent: Number(element.parent),
           });
-         
-          if(Number(element.minmax)==1){
+
+          if (Number(element.minmax) == 1) {
             nodeDataArray[nodeDataArray.length - 1].fill = "#ff0000";
           }
 
@@ -94,14 +93,17 @@
           }
         });
 
-        
-
         // set up the nodeDataArray, describing each part of the sentence
 
         myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
           var part = e.subject.part;
-          console.log(part.data.key);
-          let nodes = result[1][part.data.key - 1];
+          let nodes;
+          result[1].forEach((element) => {
+            if (element.node == part.data.key) {
+              nodes = element;
+              return;
+            }
+          });
           document.querySelector("#um").innerHTML = nodes.vetor[0];
           document.querySelector("#dois").innerHTML = nodes.vetor[1];
           document.querySelector("#tres").innerHTML = nodes.vetor[2];
@@ -148,6 +150,11 @@
     </script>
   </head>
   <body>
+    <div style="width: 100%; text-align: center;">
+      <span style="font-size: 24px; font-weight: bold;"
+        >Matheus Oliveira e João Paulo Pena</span
+      >
+    </div>
     <div id="sample" style="width: 100%; display: flex;">
       <div
         id="myDiagramDiv"
@@ -229,8 +236,8 @@
   function heuristica() {
     init("heuristica");
   }
-  function minimax(){
-    init("minimax")
+  function minimax() {
+    init("minimax");
   }
   function limpar() {
     location.reload();

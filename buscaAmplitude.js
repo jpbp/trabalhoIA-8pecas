@@ -3,16 +3,16 @@ let teste = 1;
 function criarEstadoInicialAm() {
   let estado = {
     node: 1,
-    minmax:0,
+    minmax: 0,
     parent: "-",
     //professor
-    vetor:["2","*","3","1","7","4","6","8","5"]  
+    //vetor:["2","*","3","1","7","4","6","8","5"]
     // 17ba 4bh
-    //vetor:["1","2","3","7","8","4","6","*","5"] 
+    vetor: ["1", "2", "3", "7", "8", "4", "6", "*", "5"],
     //31ba 5bh
     //vetor:["1","2","3","7","8","4","6","5","*"]
     //50000
-    //vetor:["7","*","1","6","3","4","2","8","5"] 
+    //vetor:["7","*","1","6","3","4","2","8","5"]
 
     //vetor:["1","2","3","7","8","*","6","5","4"]
   };
@@ -29,8 +29,6 @@ function print(no) {
   console.log(printnode);
 }
 
-
-
 function alteraPosicao(no, newNode, posicaoEmBranco, posicaoMudanca) {
   newNode.vetor[posicaoEmBranco] = no.vetor[posicaoMudanca];
   newNode.vetor[posicaoMudanca] = no.vetor[posicaoEmBranco];
@@ -44,7 +42,7 @@ function criarNovoEstado(no, posicaoEmBranco, posicaoMudanca) {
   let newNo = JSON.parse(JSON.stringify(no));
   newNo.parent = no.node;
   alteraPosicao(no, newNo, posicaoEmBranco, posicaoMudanca);
-  newNo.minmax=FunMinimax(newNo)
+  newNo.minmax = FunMinimax(newNo);
   return newNo;
 }
 
@@ -84,7 +82,7 @@ function verificaSejaFoiVisitado(no, visitado) {
 }
 
 function expandir(nodes, no, visitado) {
-  somaFilho=0
+  somaFilho = 0;
   let posicao = 0;
   for (let i = 0; i < no.vetor.length; i++) {
     if (no.vetor[i] === "*") {
@@ -277,7 +275,7 @@ function buscaAmplitude() {
   while (nodes.length > 0) {
     no = nodes.shift();
     visitado.push(no);
-    console.log(no)
+    console.log(no);
     if (estadoObjetivo(no)) {
       return [no, visitado];
     }

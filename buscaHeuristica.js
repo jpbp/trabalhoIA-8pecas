@@ -3,15 +3,15 @@ function criarEstadoInicialBH() {
   let estado = {
     node: 1,
     parent: "",
-    minmax:"",
+    minmax: "",
     //professor
-    vetor:["2","*","3","1","7","4","6","8","5"]  
+    //vetor:["2","*","3","1","7","4","6","8","5"]
     // 17ba 4bh
-    //vetor:["1","2","3","7","8","4","6","*","5"] 
+    vetor: ["1", "2", "3", "7", "8", "4", "6", "*", "5"],
     //31ba 5bh
     //vetor:["1","2","3","7","8","4","6","5","*"]
     //50000
-    //vetor:["7","*","1","6","3","4","2","8","5"] 
+    //vetor:["7","*","1","6","3","4","2","8","5"]
 
     //vetor:["1","2","3","7","8","*","6","5","4"]
   };
@@ -36,42 +36,42 @@ function criarfila(estadoInicial) {
   nodes.push(estadoInicial);
   return nodes;
 }
-function FunMinimax(no,posicaoEmBranco){
-  if(no.vetor[posicaoEmBranco]==5 && posicaoEmBranco==8){
-      return true
+function FunMinimax(no, posicaoEmBranco) {
+  if (no.vetor[posicaoEmBranco] == 5 && posicaoEmBranco == 8) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==6 && posicaoEmBranco==7){
-      return true
+  if (no.vetor[posicaoEmBranco] == 6 && posicaoEmBranco == 7) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==7 && posicaoEmBranco==6){
-    return true
+  if (no.vetor[posicaoEmBranco] == 7 && posicaoEmBranco == 6) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==4 && posicaoEmBranco==5){
-    return true
+  if (no.vetor[posicaoEmBranco] == 4 && posicaoEmBranco == 5) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]=='*' && posicaoEmBranco==4){
-    return true
+  if (no.vetor[posicaoEmBranco] == "*" && posicaoEmBranco == 4) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==8 && posicaoEmBranco==3){
-    return true
+  if (no.vetor[posicaoEmBranco] == 8 && posicaoEmBranco == 3) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==3 && posicaoEmBranco==2){
-    return true
+  if (no.vetor[posicaoEmBranco] == 3 && posicaoEmBranco == 2) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==2 && posicaoEmBranco==1){
-    return true
+  if (no.vetor[posicaoEmBranco] == 2 && posicaoEmBranco == 1) {
+    return true;
   }
-  if(no.vetor[posicaoEmBranco]==1 && posicaoEmBranco==0){
-    return true
+  if (no.vetor[posicaoEmBranco] == 1 && posicaoEmBranco == 0) {
+    return true;
   }
-  return false
+  return false;
 }
 
 function criarNovoEstado(no, posicaoEmBranco, posicaoMudanca) {
   let newNo = JSON.parse(JSON.stringify(no));
   newNo.parent = no.node;
   alteraPosicao(no, newNo, posicaoEmBranco, posicaoMudanca);
-  newNo.minmax=FunMinimax(newNo,posicaoEmBranco)
+  newNo.minmax = FunMinimax(newNo, posicaoEmBranco);
   return newNo;
 }
 
@@ -111,413 +111,416 @@ function verificaSejaFoiVisitado(no, visitado) {
 }
 
 function expandirH(nodes, no, visitado) {
-  console.log('entrou:',nodes.length)
+  console.log("entrou:", nodes.length);
   let posicao = 0;
   for (let i = 0; i < no.vetor.length; i++) {
     if (no.vetor[i] === "*") {
       posicao = i;
     }
   }
-  let verificaSeinseriu=false;
+  let verificaSeinseriu = false;
 
   if (posicao == 8) {
     let node1 = criarNovoEstado(no, posicao, 5);
     let node2 = criarNovoEstado(no, posicao, 7);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
 
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
 
-    if(verificaSeinseriu==false){
+    if (verificaSeinseriu == false) {
+      if (no.vetor[5] != 4) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
+      }
 
-    if (no.vetor[5] != 4) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
-        
+      if (no.vetor[7] != 6) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
     }
-
-    if (no.vetor[7] != 6) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
-      }
-    }
-  }}
+  }
 
   if (posicao == 7) {
-
     let node1 = criarNovoEstado(no, posicao, 4);
     let node2 = criarNovoEstado(no, posicao, 6);
     let node3 = criarNovoEstado(no, posicao, 8);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
 
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
 
-    if(node3.minmax){
+    if (node3.minmax) {
       somadorNodeH += 1;
       node3.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node3);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
 
-    if(verificaSeinseriu==false){
-    if (no.vetor[4] != "*") {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[4] != "*") {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
+      }
+
+      if (no.vetor[6] != 7) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
+      }
+
+      if (no.vetor[8] != 5) {
+        if (verificaSejaFoiVisitado(node3, visitado)) {
+          somadorNodeH += 1;
+          node3.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node3);
+        }
       }
     }
-
-    if (no.vetor[6] != 7) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
-      }
-    }
-
-    if (no.vetor[8] != 5) {
-      if (verificaSejaFoiVisitado(node3, visitado)) {
-        somadorNodeH += 1;
-        node3.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node3);
-      }
-    }}
   }
 
   if (posicao == 6) {
     let node1 = criarNovoEstado(no, posicao, 3);
     let node2 = criarNovoEstado(no, posicao, 7);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[3] != 8) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[3] != 8) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
       }
-    }
 
-    if (no.vetor[7] != 6) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
+      if (no.vetor[7] != 6) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
     }
-  }}
+  }
 
   if (posicao == 5) {
     let node1 = criarNovoEstado(no, posicao, 2);
     let node2 = criarNovoEstado(no, posicao, 4);
     let node3 = criarNovoEstado(no, posicao, 8);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node3.minmax){
+    if (node3.minmax) {
       somadorNodeH += 1;
       node3.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node3);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[2] != 3) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[2] != 3) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
+      }
+
+      if (no.vetor[4] != "*") {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
+      }
+
+      if (no.vetor[8] != 5) {
+        if (verificaSejaFoiVisitado(node3, visitado)) {
+          somadorNodeH += 1;
+          node3.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node3);
+        }
       }
     }
-
-    if (no.vetor[4] != "*") {
-
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
-      }
-    }
-
-    if (no.vetor[8] != 5) {
-      if (verificaSejaFoiVisitado(node3, visitado)) {
-        somadorNodeH += 1;
-        node3.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node3);
-      }
-    }
-  }}
+  }
 
   if (posicao == 4) {
     let node1 = criarNovoEstado(no, posicao, 1);
     let node2 = criarNovoEstado(no, posicao, 3);
     let node3 = criarNovoEstado(no, posicao, 5);
     let node4 = criarNovoEstado(no, posicao, 7);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node3.minmax){
+    if (node3.minmax) {
       somadorNodeH += 1;
       node3.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node3);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node4.minmax){
+    if (node4.minmax) {
       somadorNodeH += 1;
       node4.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node4);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[1] != 2) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[1] != 2) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
       }
-    }
 
-    if (no.vetor[3] != 8) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
+      if (no.vetor[3] != 8) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
-    }
 
-    if (no.vetor[5] != 4) {
-      if (verificaSejaFoiVisitado(node3, visitado)) {
-        somadorNodeH += 1;
-        node3.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node3);
+      if (no.vetor[5] != 4) {
+        if (verificaSejaFoiVisitado(node3, visitado)) {
+          somadorNodeH += 1;
+          node3.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node3);
+        }
       }
-    }
 
-    if (no.vetor[7] != 6) {
-      if (verificaSejaFoiVisitado(node4, visitado)) {
-        somadorNodeH += 1;
-        node4.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node4);
+      if (no.vetor[7] != 6) {
+        if (verificaSejaFoiVisitado(node4, visitado)) {
+          somadorNodeH += 1;
+          node4.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node4);
+        }
       }
     }
-  }}
+  }
 
   if (posicao == 3) {
     let node1 = criarNovoEstado(no, posicao, 0);
     let node2 = criarNovoEstado(no, posicao, 4);
     let node3 = criarNovoEstado(no, posicao, 6);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node3.minmax){
+    if (node3.minmax) {
       somadorNodeH += 1;
       node3.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node3);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[0] != 1) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[0] != 1) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
       }
-    }
 
-    if (no.vetor[4] != "*") {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
+      if (no.vetor[4] != "*") {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
-    }
 
-    if (no.vetor[6] != 7) {
-      if (verificaSejaFoiVisitado(node3, visitado)) {
-        somadorNodeH += 1;
-        node3.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node3);
+      if (no.vetor[6] != 7) {
+        if (verificaSejaFoiVisitado(node3, visitado)) {
+          somadorNodeH += 1;
+          node3.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node3);
+        }
       }
     }
-  }}
+  }
 
   if (posicao == 2) {
     let node1 = criarNovoEstado(no, posicao, 1);
     let node2 = criarNovoEstado(no, posicao, 5);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[1] != 2) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[1] != 2) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
       }
-    }
 
-    if (no.vetor[5] != 4) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
+      if (no.vetor[5] != 4) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
     }
-  }}
+  }
 
   if (posicao == 1) {
     let node1 = criarNovoEstado(no, posicao, 0);
     let node2 = criarNovoEstado(no, posicao, 2);
     let node3 = criarNovoEstado(no, posicao, 4);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node3.minmax){
+    if (node3.minmax) {
       somadorNodeH += 1;
       node3.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node3);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
+    if (verificaSeinseriu == false) {
+      if (no.vetor[0] != 1) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
+      }
 
-    
-    if (no.vetor[0] != 1) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+      if (no.vetor[2] != 3) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
+      }
+
+      if (no.vetor[4] != "*") {
+        if (verificaSejaFoiVisitado(node3, visitado)) {
+          somadorNodeH += 1;
+          node3.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node3);
+        }
       }
     }
-
-    if (no.vetor[2] != 3) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
-      }
-    }
-
-    if (no.vetor[4] != "*") {
-      if (verificaSejaFoiVisitado(node3, visitado)) {
-        somadorNodeH += 1;
-        node3.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node3);
-      }
-    }
-  }}
+  }
 
   if (posicao == 0) {
     let node1 = criarNovoEstado(no, posicao, 1);
     let node2 = criarNovoEstado(no, posicao, 3);
-    if(node1.minmax){
+    if (node1.minmax) {
       somadorNodeH += 1;
       node1.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node1);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(node2.minmax){
+    if (node2.minmax) {
       somadorNodeH += 1;
       node2.node = JSON.parse(JSON.stringify(somadorNodeH));
       nodes.push(node2);
-      verificaSeinseriu=true
+      verificaSeinseriu = true;
     }
-    if(verificaSeinseriu==false){
-    if (no.vetor[1] != 2) {
-      if (verificaSejaFoiVisitado(node1, visitado)) {
-        somadorNodeH += 1;
-        node1.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node1);
+    if (verificaSeinseriu == false) {
+      if (no.vetor[1] != 2) {
+        if (verificaSejaFoiVisitado(node1, visitado)) {
+          somadorNodeH += 1;
+          node1.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node1);
+        }
       }
-    }
 
-    if (no.vetor[3] != 8) {
-      if (verificaSejaFoiVisitado(node2, visitado)) {
-        somadorNodeH += 1;
-        node2.node = JSON.parse(JSON.stringify(somadorNodeH));
-        nodes.push(node2);
+      if (no.vetor[3] != 8) {
+        if (verificaSejaFoiVisitado(node2, visitado)) {
+          somadorNodeH += 1;
+          node2.node = JSON.parse(JSON.stringify(somadorNodeH));
+          nodes.push(node2);
+        }
       }
     }
-  }}
-  console.log('saiu',nodes.length)
+  }
+  console.log("saiu", nodes.length);
   return nodes;
 }
 function buscaHeuristica() {
@@ -529,12 +532,11 @@ function buscaHeuristica() {
   while (nodes.length > 0) {
     no = nodes.shift();
     visitado.push(no);
-    console.log(no)
+    console.log(no);
     if (estadoObjetivo(no)) {
       print(no);
       return [no, visitado];
     }
     nodes = expandirH(nodes, no, visitado);
-    
   }
 }
